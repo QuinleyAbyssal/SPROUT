@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: Idle
+    m_Hash: 1008081451
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: fritter_character_sprite_sheet_Idle_0
+      m_Hash: 964747531
+      m_Sprite: {fileID: 83609386, guid: 99d34dae8e4241041b97c8a0a379f50e, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 83609386, guid: 99d34dae8e4241041b97c8a0a379f50e, type: 3}
+    - m_Name: fritter_character_sprite_sheet_Idle_1
+      m_Hash: 243782045
+      m_Sprite: {fileID: -1682312737, guid: 99d34dae8e4241041b97c8a0a379f50e, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1682312737, guid: 99d34dae8e4241041b97c8a0a379f50e, type: 3}
+    - m_Name: fritter_character_sprite_sheet_Idle_2
+      m_Hash: 395214887
+      m_Sprite: {fileID: -83243537, guid: 99d34dae8e4241041b97c8a0a379f50e, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -83243537, guid: 99d34dae8e4241041b97c8a0a379f50e, type: 3}
+    - m_Name: fritter_character_sprite_sheet_Idle_3
+      m_Hash: 545894577
+      m_Sprite: {fileID: -273303714, guid: 99d34dae8e4241041b97c8a0a379f50e, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -273303714, guid: 99d34dae8e4241041b97c8a0a379f50e, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: Walking
+    m_Hash: 670923915
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: fritter_character_sprite_sheet_0
+      m_Hash: 388769104
+      m_Sprite: {fileID: 339901830, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 339901830, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_1
+      m_Hash: 539694534
+      m_Sprite: {fileID: -875725119, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -875725119, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_2
+      m_Hash: 958547068
+      m_Sprite: {fileID: 455613200, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 455613200, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_3
+      m_Hash: 237335786
+      m_Sprite: {fileID: 1437148335, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1437148335, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_4
+      m_Hash: 272752969
+      m_Sprite: {fileID: 1719651526, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1719651526, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_5
+      m_Hash: 658952671
+      m_Sprite: {fileID: -1895046529, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1895046529, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_6
+      m_Hash: 1045397605
+      m_Sprite: {fileID: -842205428, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -842205428, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_7
+      m_Hash: 155758835
+      m_Sprite: {fileID: 351707365, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 351707365, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_8
+      m_Hash: 435662178
+      m_Sprite: {fileID: -1804518879, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1804518879, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_9
+      m_Hash: 787521012
+      m_Sprite: {fileID: -1429456444, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1429456444, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_10
+      m_Hash: 113021873
+      m_Sprite: {fileID: -177999976, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -177999976, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_11
+      m_Hash: 834380583
+      m_Sprite: {fileID: 1523206740, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1523206740, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_12
+      m_Hash: 682816157
+      m_Sprite: {fileID: 1989267303, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1989267303, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_13
+      m_Hash: 532005387
+      m_Sprite: {fileID: -956044700, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -956044700, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_14
+      m_Hash: 30496680
+      m_Sprite: {fileID: 5098246, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 5098246, guid: b519611a6badd744a86106e840030446, type: 3}
+    - m_Name: fritter_character_sprite_sheet_15
+      m_Hash: 920020798
+      m_Sprite: {fileID: 1462991164, guid: b519611a6badd744a86106e840030446, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1462991164, guid: b519611a6badd744a86106e840030446, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 16
+  - m_Name: Waking Up
+    m_Hash: 625362658
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: fritter_standup_sheet_0
+      m_Hash: 932341715
+      m_Sprite: {fileID: 1747388865, guid: bd458428429b3c9419173fd3ac490c8c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1747388865, guid: bd458428429b3c9419173fd3ac490c8c, type: 3}
+    - m_Name: fritter_standup_sheet_1
+      m_Hash: 9787205
+      m_Sprite: {fileID: -1931041934, guid: bd458428429b3c9419173fd3ac490c8c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1931041934, guid: bd458428429b3c9419173fd3ac490c8c, type: 3}
+    - m_Name: fritter_standup_sheet_2
+      m_Hash: 429655807
+      m_Sprite: {fileID: 1576742910, guid: bd458428429b3c9419173fd3ac490c8c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1576742910, guid: bd458428429b3c9419173fd3ac490c8c, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 638997615895064519
+  m_Version: 1

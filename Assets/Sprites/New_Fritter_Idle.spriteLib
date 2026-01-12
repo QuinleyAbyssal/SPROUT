@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: Idle
+    m_Hash: 1008081451
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: New_Fritter_Idle_Sheet_0
+      m_Hash: 324976371
+      m_Sprite: {fileID: -1629063768, guid: ef740d911ecda7743b771490a026c056, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1629063768, guid: ef740d911ecda7743b771490a026c056, type: 3}
+    - m_Name: New_Fritter_Idle_Sheet_1
+      m_Hash: 609848933
+      m_Sprite: {fileID: -288608693, guid: ef740d911ecda7743b771490a026c056, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -288608693, guid: ef740d911ecda7743b771490a026c056, type: 3}
+    - m_Name: New_Fritter_Idle_Sheet_2
+      m_Hash: 1028710367
+      m_Sprite: {fileID: -530305279, guid: ef740d911ecda7743b771490a026c056, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -530305279, guid: ef740d911ecda7743b771490a026c056, type: 3}
+    - m_Name: New_Fritter_Idle_Sheet_3
+      m_Hash: 173535049
+      m_Sprite: {fileID: -726366129, guid: ef740d911ecda7743b771490a026c056, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -726366129, guid: ef740d911ecda7743b771490a026c056, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 639038248401161640
+  m_Version: 1

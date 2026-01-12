@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5063b9e38ffe06d4dab5a030016e62ce, type: 3}
+  m_Name: FishsticksNPC
+  m_EditorClassIdentifier: 
+  dialogueID: MeetingFish
+  npcName: Fishsticks
+  npcPortrait: {fileID: 21300000, guid: b688bd29d22f2f44fae3a10e0f80304e, type: 3}
+  dialogueLines:
+  - Don't talk ta me. I'm busy.
+  - Actually...
+  - Pick up the litter around here.
+  - Not for free of course, I'll give ya something nice in return.
+  - Of ya go then!
+  - Wee brat.
+  - Aye! Here's your reward, as promised!
+  - I'll see ya around.
+  - Come talk ta me when you're done.
+  - Oh, hello again.
+  autoProgressLines: 01010100000001000000
+  endDialogueLines: 00000000010100010101
+  autoProgressDelay: 1.5
+  typingSpeed: 0.05
+  voiceSound: {fileID: 8300000, guid: 2dbf635f9089af64786b7bc623118ed1, type: 3}
+  voicePitch: 0.35
+  choices:
+  - dialogueIndex: 3
+    choices:
+    - Okay
+    - What? No.
+    nextDialogueIndexes: 0400000005000000
+    givesQuest: 0100
+  quest: {fileID: 11400000, guid: cfea6af952b6b334984ddb595d99e5b8, type: 2}
+  DefaultStartIndex: 0
+  questInProgressIndex: 8
+  questCompletedIndex: 6
+  postQuestIndex: 9

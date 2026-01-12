@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4db0a98ab3c243449937925504337088, type: 3}
+  m_Name: LitterPickUp
+  m_EditorClassIdentifier: 
+  QuestID: Litter_Patrol_dde5b14c
+  questName: Litter Patrol
+  description: Pick up the trash around this area!
+  Objectives:
+  - type: 0
+    objectiveID: 5
+    description: Collect 3 Tincans
+    requiredAmount: 3
+    currentAmount: 0
+    IsCompleted: 0
+  - type: 0
+    objectiveID: 4
+    description: Collect 1 Piece of Paper
+    requiredAmount: 1
+    currentAmount: 0
+    IsCompleted: 0
+  requiredItems:
+  - itemData: {fileID: 11400000, guid: 11c14a2e074b4da4ab3d7355b87547f0, type: 2}
+    amount: 3
+  - itemData: {fileID: 11400000, guid: 66329170468c8a046ac50d00e179a6d4, type: 2}
+    amount: 1
+  questRewards:
+  - type: 0
+    itemReward: {fileID: 11400000, guid: 33acadf2e20675448a7f6e432613fa83, type: 2}
+    amount: 1
+    customRewardID: 3
