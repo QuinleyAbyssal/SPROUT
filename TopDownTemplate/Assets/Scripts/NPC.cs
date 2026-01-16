@@ -11,6 +11,8 @@ public class NPC : MonoBehaviour, IInteractable
     private enum QuestState { NotStarted, InProgress, Completed, HandedIn }
     private QuestState questState = QuestState.NotStarted;
     private bool isDialogueActive = false;
+    private bool waitingForGift = false;
+    public bool IsWaitingForGift() => waitingForGift && isDialogueActive;
 
     private void Start()
     {
@@ -25,23 +27,31 @@ public class NPC : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (dialogueData == null || (PauseController.IsGamePaused && !isDialogueActive))
+        // 1. Safety Check
+        if (dialogueData == null) return;
+
+        // 2. THE LOCK: If choosing a gift, do absolutely nothing.
+        // This stops the dialogue from advancing when you click the UI.
+        if (waitingForGift)
+        {
+            return;
+        }
+
+        // 3. Pause Check (Prevents interacting with others while paused)
+        if (PauseController.IsGamePaused && !isDialogueActive)
             return;
 
         if (isDialogueActive)
         {
-            // If the controller is still typing the letters
             if (DialogueController.Instance.IsTyping)
             {
                 DialogueController.Instance.SkipTyping();
-                CheckForChoices(); // Immediately show choices if the player skips typing
+                CheckForChoices();
             }
-            // If choices are currently on screen, do nothing (wait for button click)
             else if (DialogueController.Instance.ChoiceActive())
             {
-                return;
+                return; // Wait for the player to click a Choice Button
             }
-            // Otherwise, move to the next line
             else
             {
                 NextLine();
@@ -52,9 +62,41 @@ public class NPC : MonoBehaviour, IInteractable
             StartDialogue();
         }
     }
+    public void OnGiftChoiceSelected()
+    {
+        // CRITICAL: Stop the background timer so it doesn't trigger NextLine() automatically
+        StopAllCoroutines();
 
+        waitingForGift = true;
+        DialogueController.Instance.ClearChoices();
+        InventoryController.Instance.ShowInventoryForGifting();
+    }
+    public void ReceiveGift(ItemData gift)
+    {
+        Debug.Log("NPC received: " + gift.itemName);
+        waitingForGift = false;
+
+        // Remove item and add points...
+        InventoryController.Instance.RemoveItem(gift, 1);
+        FriendshipManager.Instance.ReceiveGift(dialogueData, gift);
+
+        // DYNAMIC JUMP: Use the index specifically set for this NPC
+        dialogueIndex = dialogueData.thankYouDialogueIndex;
+
+        if (DialogueController.Instance != null)
+        {
+            DialogueController.Instance.UpdateLine(dialogueIndex);
+            StartCoroutine(WaitForTypeToEnd());
+        }
+    }
     void StartDialogue()
     {
+        // 1. Set current speaker
+        if (DialogueController.Instance != null)
+        {
+            DialogueController.Instance.currentSpeaker = this;
+        }
+
         SyncQuestState();
 
         // Determine starting index based on Quest progress
@@ -64,9 +106,19 @@ public class NPC : MonoBehaviour, IInteractable
         else if (questState == QuestState.HandedIn) dialogueIndex = dialogueData.postQuestIndex;
 
         isDialogueActive = true;
+
+        // 3. FORCE THE HEARTS ON NOW
+        // We find the UI and tell it to show hearts BEFORE starting the dialogue UI
+        FriendshipUI ui = FindObjectOfType<FriendshipUI>();
+        if (ui != null)
+        {
+            // If dialogueData.npcName is "Fritter", the UI code above will hide the hearts
+            ui.UpdateHeartDisplay(dialogueData.npcName);
+        }
+
+        // 4. Start the UI display
         DialogueController.Instance.StartDialogue(dialogueData, dialogueIndex);
         PauseController.SetPause(true);
-
         StartCoroutine(WaitForTypeToEnd());
     }
 
@@ -96,13 +148,64 @@ public class NPC : MonoBehaviour, IInteractable
 
     void DisplayChoices(DialogueChoice choice)
     {
+        // Safety check for array sizing
+        if (choice.requiredFriendshipLevel == null || choice.requiredFriendshipLevel.Length < choice.choices.Length)
+        {
+            choice.requiredFriendshipLevel = new int[choice.choices.Length];
+        }
+
         for (int i = 0; i < choice.choices.Length; i++)
         {
-            int nextIdx = choice.nextDialogueIndexes[i];
-            bool givesQuest = i < choice.givesQuest.Length && choice.givesQuest[i];
+            string choiceText = choice.choices[i];
+            int currentLevel = 0;
+            if (dialogueData.npcName != "Fritter")
+            {
+                currentLevel = FriendshipManager.Instance.GetLevel(dialogueData.npcName);
+            }
 
-            DialogueController.Instance.CreateChoiceButton(choice.choices[i], () => ChooseOption(nextIdx, givesQuest));
+            bool isGiftingOption = choiceText == "Give Gift" || choiceText == "Here's a gift for you!";
+
+            // CHECK: Does the player have items?
+            bool hasItemsToGive = InventoryController.Instance.GetTotalItemCount() > 0;
+
+            // Logic for showing the button
+            bool hasQuest = dialogueData.quest != null;
+            bool questFinished = questState == QuestState.Completed || questState == QuestState.HandedIn;
+            bool canGift = (!hasQuest || questFinished) && hasItemsToGive; // Added item check here
+
+            if (currentLevel >= choice.requiredFriendshipLevel[i])
+            {
+                if (isGiftingOption && !canGift) continue;
+
+                int nextIdx = choice.nextDialogueIndexes[i];
+                bool givesQuest = i < choice.givesQuest.Length && choice.givesQuest[i];
+
+                if (isGiftingOption)
+                {
+                    DialogueController.Instance.CreateChoiceButton(choiceText, () => OnGiftChoiceSelected());
+                }
+                else
+                {
+                    DialogueController.Instance.CreateChoiceButton(choiceText, () => ChooseOption(nextIdx, givesQuest));
+                }
+            }
         }
+    }
+    public void StartCutsceneDialogue(NPCDialogue cutsceneData, int startIndex = 0)
+    {
+        // 1. Temporarily swap the data
+        NPCDialogue originalData = this.dialogueData;
+        this.dialogueData = cutsceneData;
+
+        // 2. Set the index
+        this.dialogueIndex = startIndex;
+
+        // 3. Run the standard start logic
+        // This will still trigger the Fritter safety check you wrote!
+        StartDialogue();
+
+        // 4. Optional: If you want to revert back to original data after dialogue ends
+        // you can do that in EndDialogue or keep the cutscene data as the new state.
     }
 
     void ChooseOption(int nextIndex, bool givesQuest)
@@ -121,14 +224,22 @@ public class NPC : MonoBehaviour, IInteractable
 
     void NextLine()
     {
-        // Check if the current line is marked as an "End" line in the ScriptableObject
+        // 1. If the NPC is currently showing the Thank You line, 
+        // the very next click MUST close the dialogue and unfreeze the player.
+        if (dialogueIndex == dialogueData.thankYouDialogueIndex)
+        {
+            EndDialogue();
+            return;
+        }
+
+        // 2. Check the ScriptableObject's "End Line" flags
         if (dialogueIndex < dialogueData.endDialogueLines.Length && dialogueData.endDialogueLines[dialogueIndex])
         {
             EndDialogue();
             return;
         }
 
-        // Advance index or end if out of lines
+        // 3. Normal Advance logic
         if (++dialogueIndex < dialogueData.dialogueLines.Length)
         {
             DialogueController.Instance.UpdateLine(dialogueIndex);
@@ -142,7 +253,7 @@ public class NPC : MonoBehaviour, IInteractable
 
     public void EndDialogue()
     {
-        // Handle Quest Completion/Rewards if conditions are met
+        // 1. Handle Quest Completion/Rewards
         if (questState == QuestState.Completed && dialogueData.quest != null)
         {
             if (!QuestController.Instance.IsQuestHandedIn(dialogueData.quest.QuestID))
@@ -151,9 +262,26 @@ public class NPC : MonoBehaviour, IInteractable
             }
         }
 
+        // 2. Reset Dialogue States
         isDialogueActive = false;
-        DialogueController.Instance.EndDialogue();
+        waitingForGift = false; // ADDED: Safety reset so the NPC isn't stuck waiting next time
+
+        if (DialogueController.Instance != null)
+        {
+            DialogueController.Instance.EndDialogue();
+        }
+
+        // 3. Unfreeze the Game and Player Movement
         PauseController.SetPause(false);
+
+        // Re-enable player movement
+        var player = FindObjectOfType<PlayerMovement>();
+        if (player != null)
+        {
+            player.enabled = true;
+        }
+
+        // 4. Kill any active typing coroutines
         StopAllCoroutines();
     }
 
@@ -195,20 +323,20 @@ public class NPC : MonoBehaviour, IInteractable
         return QuestController.Instance.AreQuestRequirementsMet(quest);
     }
 
-    void HandleQuestCompletion(Quest questToHandIn)
+    private void HandleQuestCompletion(Quest quest)
     {
-        // 1. Remove required items from inventory
-        foreach (var requirement in questToHandIn.requiredItems)
+        if (QuestController.Instance.IsQuestActive(quest.QuestID))
         {
-            InventoryController.Instance.RemoveItem(requirement.itemData, requirement.amount);
+            // This tells the GLOBAL controller the quest is done
+            QuestController.Instance.HandInQuest(quest.QuestID);
+
+            // Ensure the global controller adds this ID to its handedInQuestIDs list
+            if (!QuestController.Instance.handedInQuestIDs.Contains(quest.QuestID))
+            {
+                QuestController.Instance.handedInQuestIDs.Add(quest.QuestID);
+            }
+
+            Debug.Log("Quest Handed In via NPC: " + quest.QuestID);
         }
-
-        // 2. Grant Rewards
-        RewardsController.Instance.GrantRewards(questToHandIn);
-
-        // 3. Mark as Handed In
-        QuestController.Instance.HandInQuest(questToHandIn.QuestID);
-
-        questState = QuestState.HandedIn;
     }
 }

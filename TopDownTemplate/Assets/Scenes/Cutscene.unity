@@ -3480,7 +3480,7 @@ PlayableDirector:
   - key: {fileID: 2825862621067140314, guid: 7fcc3379e66548a4da8d4e0853cbcf80, type: 2}
     value: {fileID: 793335306}
   - key: {fileID: 5689704980031504807, guid: 7fcc3379e66548a4da8d4e0853cbcf80, type: 2}
-    value: {fileID: 1225041791}
+    value: {fileID: 793335313}
   - key: {fileID: 809876220766723349, guid: 7fcc3379e66548a4da8d4e0853cbcf80, type: 2}
     value: {fileID: 1934391469}
   m_ExposedReferences:
@@ -3503,13 +3503,13 @@ MonoBehaviour:
     m_Events:
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 617559040}
-          m_TargetAssemblyTypeName: DialogueSignalBridge, Assembly-CSharp
-          m_MethodName: PlayCutscene
-          m_Mode: 2
+        - m_Target: {fileID: 793335314}
+          m_TargetAssemblyTypeName: CutsceneTrigger, Assembly-CSharp
+          m_MethodName: ActivateFritterDialogue
+          m_Mode: 1
           m_Arguments:
-            m_ObjectArgument: {fileID: 11400000, guid: 1d9681bcd488ea94bb3a2379c80f67f5, type: 2}
-            m_ObjectArgumentAssemblyTypeName: NPCDialogue, Assembly-CSharp
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -3553,6 +3553,8 @@ GameObject:
   - component: {fileID: 793335310}
   - component: {fileID: 793335309}
   - component: {fileID: 793335312}
+  - component: {fileID: 793335313}
+  - component: {fileID: 793335314}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3895,6 +3897,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueData: {fileID: 11400000, guid: 1d9681bcd488ea94bb3a2379c80f67f5, type: 2}
+--- !u!114 &793335313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793335300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 3a395227cab7b394e82a265233c0732c, type: 2}
+    - {fileID: 11400000, guid: dddcd09e1fd18bb419838c5565440a55, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 793335314}
+          m_TargetAssemblyTypeName: CutsceneTrigger, Assembly-CSharp
+          m_MethodName: ActivateFritterDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 793335314}
+          m_TargetAssemblyTypeName: CutsceneTrigger, Assembly-CSharp
+          m_MethodName: ForceEndDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &793335314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793335300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a38bc4eb5a2a56c4681f7905b3098cbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutsceneAsset: {fileID: 11400000, guid: 1d9681bcd488ea94bb3a2379c80f67f5, type: 2}
+  startLine: 0
 --- !u!1 &841098480
 GameObject:
   m_ObjectHideFlags: 0
@@ -12871,7 +12932,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1225041792}
-  - component: {fileID: 1225041791}
   m_Layer: 0
   m_Name: Cutscene Manager
   m_TagString: Untagged
@@ -12879,36 +12939,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1225041791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1225041790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: 3a395227cab7b394e82a265233c0732c, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 617559040}
-          m_TargetAssemblyTypeName: DialogueSignalBridge, Assembly-CSharp
-          m_MethodName: CallDialogue
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 11400000, guid: 1d9681bcd488ea94bb3a2379c80f67f5, type: 2}
-            m_ObjectArgumentAssemblyTypeName: NPCDialogue, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!4 &1225041792
 Transform:
   m_ObjectHideFlags: 0

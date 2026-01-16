@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 212d5412b1362514bb592b34a357fdb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 11c14a2e074b4da4ab3d7355b87547f0, type: 2}
   ID: 5
   worldID: 
   Name: Can

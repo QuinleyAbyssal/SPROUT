@@ -8,6 +8,7 @@ public class Item : MonoBehaviour
 {
     // --- STATIC ITEM DEFINITION (Set in Prefab Inspector) ---
     // These fields are public for the Inspector but treated as constant data.
+    public ItemData itemData; // Add this line if it's missing!
     public int ID; // Keep this as '5' for all Tincans (Quest System uses this)
     public string worldID; // Set this to "Can_Area1_1", "Can_Area1_2", etc.
 

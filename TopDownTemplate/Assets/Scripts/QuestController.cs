@@ -132,6 +132,10 @@ public class QuestController : MonoBehaviour
     }
     public void HandInQuest(string questID)
     {
+        if (!handedInQuestIDs.Contains(questID))
+        {
+            handedInQuestIDs.Add(questID);
+        }
         QuestProgress progress = activeQuestProgress.Find(q => q.QuestID == questID);
         if (progress == null || !progress.IsCompleted()) return;
 
@@ -149,5 +153,16 @@ public class QuestController : MonoBehaviour
         activeQuestProgress.Remove(progress);
 
         questUI?.UpdateQuestUI();
+    }
+    public List<string> handedInQuestIDs = new List<string>();
+    public List<string> GetHandedInQuestIDs()
+    {
+        return handedInQuestIDs;
+    }
+
+    public void LoadHandedInQuests(List<string> savedIDs)
+    {
+        // If savedIDs is null, start with a fresh list
+        handedInQuestIDs = savedIDs ?? new List<string>();
     }
 }

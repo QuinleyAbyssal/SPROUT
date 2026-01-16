@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 212d5412b1362514bb592b34a357fdb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 33acadf2e20675448a7f6e432613fa83, type: 2}
   ID: 3
   worldID: 
   Name: BottleCap

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3786e49059ec29840a5303354710f7dd, type: 3}
+  m_Name: FirstStepsAchievement
+  m_EditorClassIdentifier: 
+  achievementName: First steps
+  description: You're taking your first steps to making new friends!
+  icon: {fileID: 21300000, guid: 58b97375d85743a4fb6ccc3ffbaafe44, type: 3}
+  isUnlocked: 1

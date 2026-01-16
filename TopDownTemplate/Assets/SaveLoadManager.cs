@@ -67,6 +67,20 @@ public class SaveLoadManager : MonoBehaviour
     }
 }
 [System.Serializable]
+public class FriendshipData
+{
+    public string npcName;
+    public int points;
+    public int level; // e.g., 0-10 hearts
+    public List<string> unlockedRewards; // Track what has already been given
+}
+[System.Serializable]
+public class FriendshipSaveData
+{
+    public string npcName;
+    public int level;
+}
+[System.Serializable]
 public class SaveData
 {
     public List<InventorySaveData> inventory;
@@ -84,4 +98,5 @@ public class SaveData
     public List<QuestProgress> questProgressData; // Fixed Type
     public List<string> handinQuestIDs;
     public string mapBoundary; // Fixed Type to accept GameObject names
+    public List<FriendshipSaveData> friendshipLevels = new List<FriendshipSaveData>();
 }

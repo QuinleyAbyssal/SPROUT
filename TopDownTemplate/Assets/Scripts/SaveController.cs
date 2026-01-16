@@ -76,48 +76,53 @@ public class SaveController : MonoBehaviour
     }
 
     public void SaveGame()
+{
+    inventoryController?.RebuildItemCounts();
+    QuestController.Instance?.RefreshQuestProgress();
+
+    GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+    if (playerObj == null) return;
+
+    SaveData saveData = new SaveData();
+
+        // --- QUEST FIX: Save the Handed-In Quest IDs ---
+        if (QuestController.Instance != null)
+        {
+            saveData.handinQuestIDs = QuestController.Instance.GetHandedInQuestIDs();
+        }
+
+        if (FriendshipManager.Instance != null)
     {
-        inventoryController?.RebuildItemCounts();
-        QuestController.Instance?.RefreshQuestProgress();
-
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj == null) return;
-
-        // 1. Initialize the data object FIRST
-        SaveData saveData = new SaveData();
-
-        // 2. NOW you can assign the music track name
-        if (MusicManager.Instance != null)
-        {
-            saveData.currentMusicTrack = MusicManager.Instance.GetCurrentTrackName();
-        }
-
-        saveData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
-        saveData.playerPosition = playerObj.transform.position;
-
-        // 3. FIX: Save the Map Boundary name
-        cinemachineConfiner = FindObjectOfType<CinemachineConfiner>();
-        if (cinemachineConfiner != null && cinemachineConfiner.m_BoundingShape2D != null)
-        {
-            // This puts "F1" or "T1" into the JSON
-            saveData.mapBoundary = cinemachineConfiner.m_BoundingShape2D.gameObject.name;
-        }
-
-        // 4. FIX: Save the World Item States (so picked up items stay gone)
-        if (WorldStateManager.Instance != null)
-        {
-            saveData.collectedWorldItemIDs = WorldStateManager.Instance.GetCollectedIDs();
-        }
-
-        // 5. Save Quest and Inventory
-        saveData.inventorySaveData = inventoryController?.GetInventoryItems() ?? new List<InventorySaveData>();
-        saveData.questProgressData = QuestController.Instance?.GetSerializedProgress() ?? new List<QuestProgress>();
-
-        // 6. Write to file
-        string json = JsonUtility.ToJson(saveData, true);
-        File.WriteAllText(saveLocation, json);
-        Debug.Log("Saved Successfully with Music: " + saveData.currentMusicTrack);
+        saveData.friendshipLevels = FriendshipManager.Instance.GetSerializedFriendshipData();
     }
+
+    if (MusicManager.Instance != null)
+    {
+        saveData.currentMusicTrack = MusicManager.Instance.GetCurrentTrackName();
+    }
+
+    saveData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
+    saveData.playerPosition = playerObj.transform.position;
+
+    cinemachineConfiner = FindObjectOfType<CinemachineConfiner>();
+    if (cinemachineConfiner != null && cinemachineConfiner.m_BoundingShape2D != null)
+    {
+        saveData.mapBoundary = cinemachineConfiner.m_BoundingShape2D.gameObject.name;
+    }
+
+    if (WorldStateManager.Instance != null)
+    {
+        saveData.collectedWorldItemIDs = WorldStateManager.Instance.GetCollectedIDs();
+    }
+
+    saveData.inventorySaveData = inventoryController?.GetInventoryItems() ?? new List<InventorySaveData>();
+    saveData.questProgressData = QuestController.Instance?.GetSerializedProgress() ?? new List<QuestProgress>();
+
+    string json = JsonUtility.ToJson(saveData, true);
+    File.WriteAllText(saveLocation, json);
+    Debug.Log("Saved Successfully with Music: " + saveData.currentMusicTrack);
+    Debug.Log("Game Saved to: " + saveLocation);
+}
 
     public void LoadGame()
     {
@@ -162,6 +167,12 @@ public class SaveController : MonoBehaviour
 
         string json = File.ReadAllText(saveLocation);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
+
+        // ADD THIS: Send levels to the FriendshipManager
+        if (FriendshipManager.Instance != null && data.friendshipLevels != null)
+        {
+            FriendshipManager.Instance.LoadFriendshipData(data.friendshipLevels);
+        }
 
         // ADD THIS: Resume the saved music track immediately upon application
         if (MusicManager.Instance != null && !string.IsNullOrEmpty(data.currentMusicTrack))
@@ -212,7 +223,11 @@ public class SaveController : MonoBehaviour
         // 3. Quest & Inventory Logic
         if (QuestController.Instance != null)
         {
+            // This tells the QuestController which quests are already finished
             QuestController.Instance.LoadQuestProgress(data.questProgressData, data.handinQuestIDs);
+
+            // Also explicitly load the hand-in list itself if LoadQuestProgress doesn't do it
+            QuestController.Instance.LoadHandedInQuests(data.handinQuestIDs);
         }
 
         // 5. Hide Collected World Items - IMPORTANT: Do this BEFORE RefreshUI

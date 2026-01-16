@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5063b9e38ffe06d4dab5a030016e62ce, type: 3}
   m_Name: Fritter Start Dialogue
   m_EditorClassIdentifier: 
+  dialogueID: 
   npcName: Fritter
   npcPortrait: {fileID: 21300000, guid: 1857a42519c7c4e4fbbfafad379802a6, type: 3}
   dialogueLines:
@@ -23,7 +24,19 @@ MonoBehaviour:
   typingSpeed: 0.05
   voiceSound: {fileID: 8300000, guid: 2dbf635f9089af64786b7bc623118ed1, type: 3}
   voicePitch: 0.5
-  choices: []
+  lovedItems: []
+  likedItems: []
+  hatedItems: []
+  choices:
+  - dialogueIndex: 0
+    choices:
+    - Give Gift
+    nextDialogueIndexes: 
+    givesQuest: 
+    requiredFriendshipLevel: 00000000
+  quest: {fileID: 0}
+  DefaultStartIndex: 0
   questInProgressIndex: 0
   questCompletedIndex: 0
-  quest: {fileID: 0}
+  postQuestIndex: 0
+  thankYouDialogueIndex: 0

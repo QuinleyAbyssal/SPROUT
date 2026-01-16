@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // This part defines the Data Asset
@@ -15,6 +16,11 @@ public class NPCDialogue : ScriptableObject
     public AudioClip voiceSound;
     public float voicePitch = 1f;
 
+    [Header("Gifting Preferences")]
+    public List<ItemData> lovedItems;  // +50 points
+    public List<ItemData> likedItems;  // +20 points
+    public List<ItemData> hatedItems;  // -20 points
+
     public DialogueChoice[] choices; // This uses the class defined below
 
     [Header("Quest Indexes")]
@@ -23,6 +29,9 @@ public class NPCDialogue : ScriptableObject
     public int questInProgressIndex;
     public int questCompletedIndex;
     public int postQuestIndex;
+
+    [Header("Gifting")]
+    public int thankYouDialogueIndex;
 }
 
 // THIS PART MUST BE OUTSIDE THE PREVIOUS CURLY BRACES
@@ -33,4 +42,5 @@ public class DialogueChoice
     public string[] choices; // What text is on the buttons?
     public int[] nextDialogueIndexes; // Where does each button lead?
     public bool[] givesQuest; // Does this button grant a quest?
+    public int[] requiredFriendshipLevel;
 }

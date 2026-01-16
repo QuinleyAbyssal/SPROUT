@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 212d5412b1362514bb592b34a357fdb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 66329170468c8a046ac50d00e179a6d4, type: 2}
   ID: 4
   worldID: 
   Name: Paper

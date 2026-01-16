@@ -14,6 +14,7 @@ public class DialogueController : MonoBehaviour
     public Image portraitImage;
     public Transform choiceContainer;
     public GameObject choiceButtonPrefab;
+    public NPC currentSpeaker; // Set this when dialogue starts
     [Header("Save Data")]
     public List<string> completedDialogueIDs = new List<string>();
 
@@ -40,8 +41,14 @@ public class DialogueController : MonoBehaviour
 
     public void StartDialogue(NPCDialogue dialogueData, int startIndex)
     {
-        // 1. Reconnect to the CURRENT scene's UI based on your hierarchy
         ReconnectUI();
+
+        // 1. Force the hearts to update BEFORE anything else happens
+        if (FriendshipUI.Instance != null)
+        {
+            // This will correctly hide hearts for "Fritter" or show them for others
+            FriendshipUI.Instance.UpdateHeartDisplay(dialogueData.npcName);
+        }
 
         currentDialogue = dialogueData;
         currentLineIndex = startIndex;
@@ -49,9 +56,7 @@ public class DialogueController : MonoBehaviour
 
         if (dialoguePanel != null) dialoguePanel.SetActive(true);
 
-        // 2. Push the Asset data (Fritter, Sprite) to the UI components
         UpdateUIElements();
-
         DisplayLine();
     }
     public void UpdateLine(int newIndex)
@@ -156,10 +161,16 @@ public class DialogueController : MonoBehaviour
     {
         IsDialogueActive = false;
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
+
+        // ADD THIS: Ensure hearts hide when the conversation ends
+        if (FriendshipUI.Instance != null)
+        {
+            FriendshipUI.Instance.HideHearts();
+        }
     }
 
 
-public void ClearChoices() // Fixes the RectTransform crash
+    public void ClearChoices() // Fixes the RectTransform crash
     {
         if (choiceContainer == null) return;
         foreach (Transform child in choiceContainer) Destroy(child.gameObject);

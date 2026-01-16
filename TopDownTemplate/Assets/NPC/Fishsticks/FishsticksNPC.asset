@@ -26,12 +26,19 @@ MonoBehaviour:
   - I'll see ya around.
   - Come talk ta me when you're done.
   - Oh, hello again.
-  autoProgressLines: 01010100000001000000
-  endDialogueLines: 00000000010100010101
+  - Thanks.
+  autoProgressLines: 0101010000000100000000
+  endDialogueLines: 0000000001010001010101
   autoProgressDelay: 1.5
   typingSpeed: 0.05
   voiceSound: {fileID: 8300000, guid: 2dbf635f9089af64786b7bc623118ed1, type: 3}
   voicePitch: 0.35
+  lovedItems: []
+  likedItems:
+  - {fileID: 11400000, guid: d98e8797cac7b5e41afdbd3cea88fd4e, type: 2}
+  hatedItems:
+  - {fileID: 11400000, guid: 11c14a2e074b4da4ab3d7355b87547f0, type: 2}
+  - {fileID: 11400000, guid: 66329170468c8a046ac50d00e179a6d4, type: 2}
   choices:
   - dialogueIndex: 3
     choices:
@@ -39,8 +46,10 @@ MonoBehaviour:
     - What? No.
     nextDialogueIndexes: 0400000005000000
     givesQuest: 0100
+    requiredFriendshipLevel: 0000000000000000
   quest: {fileID: 11400000, guid: cfea6af952b6b334984ddb595d99e5b8, type: 2}
   DefaultStartIndex: 0
   questInProgressIndex: 8
   questCompletedIndex: 6
   postQuestIndex: 9
+  thankYouDialogueIndex: 10

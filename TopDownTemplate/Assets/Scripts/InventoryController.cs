@@ -9,6 +9,8 @@ public class InventoryController : MonoBehaviour
     [Header("Internal References")]
     private Slot[] inventorySlots;
     private ItemDictionary itemDictionary;
+    public GameObject menuObject;      // The main "Menu" parent
+    public GameObject pagesContainer;  // The "Pages" object
 
     [Header("UI References")]
     public GameObject inventoryPanel;
@@ -19,27 +21,57 @@ public class InventoryController : MonoBehaviour
 
     private Dictionary<int, int> itemsCountCache = new();
     public event Action OnInventoryChanged;
-
+    private ItemData selectedGift;
     public Dictionary<int, int> GetItemCounts()
     {
         // Returns the cache we already calculate in RebuildItemCounts
         return itemsCountCache;
     }
+    private ItemData currentlySelectedItem;
+
+    // Call this when a player clicks an item slot in your UI
     private void Awake()
     {
-        // Singleton Pattern
-        if (Instance != null && Instance != this)
+        if (Instance == null)
+        {
+            Instance = this;
+            // Only DontDestroyOnLoad if this is the main GameController
+            if (transform.parent == null) DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        Instance = this;
 
-        // Initialize Item Dictionary (Ensure ItemDictionary.Instance exists)
         itemDictionary = ItemDictionary.Instance;
-
         InitializeInventoryUI();
         RebuildItemCounts();
+    }
+    public void SelectItem(ItemData item)
+    {
+        currentlySelectedItem = item;
+        Debug.Log("Selected item for gifting: " + (item != null ? item.itemName : "None"));
+    }
+    public void SetSelectedGift(ItemData item)
+    {
+        selectedGift = item;
+    }
+
+    public ItemData GetSelectedGift()
+    {
+        return selectedGift;
+    }
+    // This is what the NPC script calls
+    public ItemData GetCurrentlySelectedItem()
+    {
+        return currentlySelectedItem;
+    }
+    public void ShowInventoryForGifting()
+    {
+        if (menuObject != null) menuObject.SetActive(true);
+        if (pagesContainer != null) pagesContainer.SetActive(true);
+        if (inventoryPanel != null) inventoryPanel.SetActive(true); // This is your InventoryPage
     }
 
     // --- INITIALIZATION ---
@@ -160,7 +192,16 @@ public class InventoryController : MonoBehaviour
         }
         OnInventoryChanged?.Invoke();
     }
-
+    public int GetTotalItemCount()
+    {
+        int total = 0;
+        // Assuming you have a list or array of slots
+        foreach (var slot in inventorySlots)
+        {
+            if (slot.HasItem()) total++;
+        }
+        return total;
+    }
     public int GetItemCount(ItemData itemToCount)
     {
         if (itemToCount == null) return 0;
